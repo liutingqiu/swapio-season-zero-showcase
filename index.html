@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Swap.io Season Zero & Pump the Pool 3 Simulator 💎⚡ | Superteam Bounty</title>
+  <meta name="description" content="Interactive guide, dynamic prize pool scaler, and Social Quest XP calculator for Swap.io Season Zero and Pump the Pool 3 on Solana.">
+  <style>
+    :root {
+      --bg: #070913;
+      --card-bg: #0e1526;
+      --card-border: #1a2642;
+      --swap-cyan: #00F0FF;
+      --swap-blue: #0070F3;
+      --solana-green: #14F195;
+      --gold: #F59E0B;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+    }
+
+    header {
+      background: linear-gradient(180deg, rgba(0, 240, 255, 0.18) 0%, rgba(7, 9, 19, 0) 100%);
+      padding: 2.5rem 2rem 1.5rem;
+      border-bottom: 1px solid var(--card-border);
+      text-align: center;
+    }
+
+    .badge {
+      display: inline-block;
+      background: rgba(0, 240, 255, 0.15);
+      color: var(--swap-cyan);
+      border: 1px solid rgba(0, 240, 255, 0.4);
+      padding: 0.3rem 0.8rem;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.75rem;
+    }
+
+    h1 {
+      font-size: 2.2rem;
+      font-weight: 800;
+      background: linear-gradient(90deg, #ffffff 0%, var(--swap-cyan) 50%, var(--solana-green) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 0.5rem;
+    }
+
+    .subtitle {
+      font-size: 1.05rem;
+      color: var(--text-muted);
+      max-width: 780px;
+      margin: 0 auto 1.5rem;
+    }
+
+    .btn-group {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.65rem 1.25rem;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      cursor: pointer;
+      border: none;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--swap-blue) 0%, var(--swap-cyan) 100%);
+      color: #000;
+      font-weight: 700;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 15px rgba(0, 240, 255, 0.4);
+    }
+
+    .btn-secondary {
+      background: var(--card-bg);
+      color: var(--swap-cyan);
+      border: 1px solid var(--swap-cyan);
+    }
+
+    .container {
+      max-width: 1250px;
+      margin: 0 auto;
+      padding: 2rem 1.5rem 4rem;
+    }
+
+    /* Top Stats */
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .stat-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 10px;
+      padding: 1.25rem;
+    }
+
+    .stat-lbl {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+
+    .stat-val {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: var(--swap-cyan);
+      margin-top: 0.25rem;
+    }
+
+    /* Main Grid */
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    @media (max-width: 900px) {
+      .dashboard-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .panel {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 1.5rem;
+    }
+
+    .panel-title {
+      font-size: 1.15rem;
+      font-weight: 700;
+      margin-bottom: 1.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .quest-card {
+      background: #070a14;
+      border: 1px solid var(--card-border);
+      border-radius: 8px;
+      padding: 0.85rem 1rem;
+      margin-bottom: 0.75rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .quest-name {
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: #fff;
+    }
+
+    .quest-sub {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .btn-quest {
+      background: rgba(0, 240, 255, 0.15);
+      border: 1px solid var(--swap-cyan);
+      color: var(--swap-cyan);
+      padding: 0.35rem 0.75rem;
+      border-radius: 6px;
+      font-size: 0.8rem;
+      cursor: pointer;
+      font-weight: 700;
+      transition: all 0.2s ease;
+    }
+
+    .btn-quest:hover {
+      background: var(--swap-cyan);
+      color: #000;
+    }
+
+    .log-box {
+      background: #05070e;
+      border: 1px solid var(--card-border);
+      border-radius: 8px;
+      padding: 1rem;
+      font-family: monospace;
+      font-size: 0.8rem;
+      color: var(--swap-cyan);
+      min-height: 180px;
+      max-height: 250px;
+      overflow-y: auto;
+    }
+
+    footer {
+      border-top: 1px solid var(--card-border);
+      text-align: center;
+      padding: 2rem;
+      color: var(--text-muted);
+      font-size: 0.85rem;
+    }
+
+    footer a {
+      color: var(--swap-cyan);
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="badge">Superteam Earn Bounty • Swap.io Video Campaign ($500 USDC)</div>
+    <h1>Swap.io Season Zero &amp; Pump the Pool 3 Simulator 💎⚡</h1>
+    <p class="subtitle">Dynamic prize pool volume scaler ($1k &rarr; $10k), Season Zero XP multiplier engine, and Social Quests calculator for Swap.io multi-DEX aggregator on Solana.</p>
+    <div class="btn-group">
+      <a href="https://github.com/liutingqiu/swapio-season-zero-showcase" target="_blank" class="btn btn-primary">
+        GitHub Repository
+      </a>
+      <a href="https://superteam.fun/earn/listing/make-a-video-season-zero-pump-the-pool-3-and-social-quests" target="_blank" class="btn btn-secondary">
+        Superteam Bounty ($500)
+      </a>
+    </div>
+  </header>
+
+  <div class="container">
+    <!-- Top Stats -->
+    <div class="stats-row">
+      <div class="stat-card">
+        <div class="stat-lbl">Active Competition</div>
+        <div class="stat-val" style="font-size: 1.15rem; color: #fff;">Pump the Pool 3</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-lbl">Dynamic Prize Pool</div>
+        <div class="stat-val" id="valPool" style="color: var(--solana-green);">$2,850 USDC</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-lbl">Cumulative Volume</div>
+        <div class="stat-val" id="valVolume">$18,500,000 USD</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-lbl">Referral Headstart</div>
+        <div class="stat-val" style="color: var(--gold);">+5,000 XP &amp; 25% Fee Share</div>
+      </div>
+    </div>
+
+    <!-- Main Dual Panel -->
+    <div class="dashboard-grid">
+      <!-- Left: Dynamic Scaling & Trading Simulator -->
+      <div class="panel">
+        <div class="panel-title">
+          <span>🚀 Pump the Pool 3 Dynamic Growth</span>
+          <span style="font-size: 0.8rem; color: var(--solana-green); font-weight: 600;">+$100 / $1M Traded</span>
+        </div>
+
+        <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1rem;">
+          Starts at $1,000 base pool. Every $1M in community volume adds +$100 up to a $10,000 maximum. The top 20 traders split the final pot!
+        </p>
+
+        <div style="background: #070a14; border: 1px solid var(--card-border); border-radius: 8px; padding: 1rem; margin-bottom: 1.25rem;">
+          <div style="display: flex; justify-content: space-between; margin-bottom: 0.4rem; font-size: 0.85rem;">
+            <span style="color: var(--text-muted);">Simulate Volume Add:</span>
+            <strong style="color: #fff;">+$1,000,000 USD</strong>
+          </div>
+          <div style="display: flex; justify-content: space-between; font-size: 0.85rem;">
+            <span style="color: var(--text-muted);">Pool Prize Increments:</span>
+            <strong style="color: var(--solana-green);">+$100 USDC to Top 20</strong>
+          </div>
+        </div>
+
+        <button class="btn btn-primary" style="width: 100%; margin-bottom: 1rem;" onclick="addVolume()">
+          ⚡ Pump The Pool (+ $1,000,000 Volume)
+        </button>
+
+        <div class="panel-title" style="margin-top: 1.5rem;">
+          <span>🎯 Social Quests XP Booster</span>
+          <span style="font-size: 0.8rem; color: var(--gold);">Instant XP</span>
+        </div>
+
+        <div class="quest-card">
+          <div>
+            <div class="quest-name">Follow @swapdotio on X</div>
+            <div class="quest-sub">+1,500 Season Zero XP</div>
+          </div>
+          <button class="btn-quest" onclick="completeQuest('Follow @swapdotio', 1500)">
+            Claim 1,500 XP
+          </button>
+        </div>
+
+        <div class="quest-card">
+          <div>
+            <div class="quest-name">Repost Pump the Pool 3 Announcement</div>
+            <div class="quest-sub">+2,000 Season Zero XP</div>
+          </div>
+          <button class="btn-quest" onclick="completeQuest('Repost Announcement', 2000)">
+            Claim 2,000 XP
+          </button>
+        </div>
+      </div>
+
+      <!-- Right: Real-time Profile & Execution Log -->
+      <div class="panel">
+        <div class="panel-title">
+          <span>📊 Season Zero Trader XP Balance</span>
+          <span style="font-size: 0.8rem; color: var(--swap-cyan);" id="valTraderXp">5,000 XP (Referral Boost)</span>
+        </div>
+
+        <div class="log-box" id="terminalLog">
+          [Swap.io Engine] Connected to Solana Mainnet DEX Aggregator.
+          <br>[Referral Headstart] Granted +5,000 XP onboarding headstart! Referrer earns 25% fee share.
+          <br>[Pump the Pool 3] Active volume: $18.5M | Prize pool scaled to $2,850 USDC.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <p>Submitted to the <strong>Swap.io Video &amp; Campaign Bounty ($500 USDC)</strong> on Superteam Earn • Open Source MIT License</p>
+    <p style="margin-top: 0.25rem;">Repository: <a href="https://github.com/liutingqiu/swapio-season-zero-showcase" target="_blank">github.com/liutingqiu/swapio-season-zero-showcase</a></p>
+  </footer>
+
+  <script>
+    let volume = 18500000;
+    let pool = 2850;
+    let traderXp = 5000;
+
+    function addVolume() {
+      volume += 1000000;
+      pool = Math.min(10000, 1000 + Math.floor(volume / 1000000) * 100);
+      traderXp += 10000; // 10,000 XP earned from trade volume
+
+      document.getElementById('valVolume').innerText = `$${volume.toLocaleString()} USD`;
+      document.getElementById('valPool').innerText = `$${pool.toLocaleString()} USDC`;
+      document.getElementById('valTraderXp').innerText = `${traderXp.toLocaleString()} XP`;
+
+      const log = document.getElementById('terminalLog');
+      const time = new Date().toLocaleTimeString();
+      log.innerHTML += `<br><br>[${time}] [Volume Pumped] Community executed trades! Total Volume: $${(volume/1e6).toFixed(1)}M`;
+      log.innerHTML += `<br>[${time}] 🚀 [Prize Scaled] Pump the Pool 3 prize pool expanded to <strong>$${pool.toLocaleString()} USDC</strong>!`;
+      log.scrollTop = log.scrollHeight;
+    }
+
+    function completeQuest(name, xp) {
+      traderXp += xp;
+      document.getElementById('valTraderXp').innerText = `${traderXp.toLocaleString()} XP`;
+
+      const log = document.getElementById('terminalLog');
+      const time = new Date().toLocaleTimeString();
+      log.innerHTML += `<br><br>[${time}] [Social Quest] Completed: <strong>${name}</strong>`;
+      log.innerHTML += `<br>[${time}] 🌟 Awarded +${xp.toLocaleString()} XP! New Total: ${traderXp.toLocaleString()} XP`;
+      log.scrollTop = log.scrollHeight;
+    }
+  </script>
+</body>
+</html>

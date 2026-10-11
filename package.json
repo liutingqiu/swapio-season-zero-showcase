@@ -1,0 +1,26 @@
+{
+  "name": "swapio-season-zero-showcase",
+  "version": "1.0.0",
+  "description": "Swap.io Season Zero, Pump the Pool 3 Volume Tracker, Dynamic Prize Pool Scaler, and Social Quest XP Simulator",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "type": "module",
+  "scripts": {
+    "build": "tsc",
+    "test": "node --test tests/*.test.js"
+  },
+  "keywords": [
+    "solana",
+    "swapio",
+    "season-zero",
+    "pump-the-pool",
+    "dex-aggregator",
+    "xp-rewards",
+    "superteam-earn"
+  ],
+  "author": "Tingqiu Liu <tianqi689@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "typescript": "^5.6.3"
+  }
+}
